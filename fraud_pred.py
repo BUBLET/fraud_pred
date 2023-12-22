@@ -86,5 +86,5 @@ dnn = calculate_results(y_test_rounded, y_pred_bin)
 tf_model.save("fraud_pred.keras")
 
 #Вывод итогов
-model_perf = pd.DataFrame({"Logistic Regression":logistic,"Deep Neural Network":dnn,"Convolution":cnn})
+model_perf = pd.DataFrame({"Logistic Regression":logistic,"Deep Neural Network":dnn})
 print(model_perf)
