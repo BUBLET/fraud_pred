@@ -85,29 +85,6 @@ dnn = calculate_results(y_test_rounded, y_pred_bin)
 # Сохранение модели
 tf_model.save("fraud_pred.keras")
 
-# Модель 3: Сверточная нейронная сеть
-cnn_model = tf.keras.Sequential([
-    layers.Reshape((30, 1), input_shape=(30,)),
-    layers.Conv1D(64, 3, activation='relu'),
-    layers.MaxPooling1D(2),
-    layers.Flatten(),
-    layers.Dense(64, activation='relu'),
-    layers.Dense(1, activation='sigmoid')
-])
-cnn_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-history = cnn_model.fit(X_train_scaled, y_train, validation_split=0.2, epochs=5, verbose=2)
-
-y_probs = cnn_model.predict(X_test_scaled)
-y_test_rounded = np.round(y_test)
-
-# Преобразуем предсказанные вероятности в бинарные классификации
-y_pred_bin = np.where(y_probs > 0.5, 1, 0)
-
-# Оценка результатов и вычисление метрик
-cnn = calculate_results(y_test_rounded, y_pred_bin)
-# Сохранение модели
-tf_model.save("fraud_pred_cnn.keras")
-
 #Вывод итогов
 model_perf = pd.DataFrame({"Logistic Regression":logistic,"Deep Neural Network":dnn,"Convolution":cnn})
 print(model_perf)
